@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from 'react';
+import QuestionGenerator from './Questiongenerator'; // Adjust the path based on your actual file structure
+import TopicInput from './TopicInput'; // Adjust the path based on your actual file structure
+import QuizQuestions from './QuizQuestions'; // Adjust the path based on your actual file structure
+import Button from './button'; // Adjust the path based on your actual file structure
+import './App.css'; 
+const App = () => {
+  const [topic, setTopic] = useState('');
+  const [questions, setQuestions] = useState('');
 
-function App() {
+  const handleTopicChange = (newTopic) => {
+    setTopic(newTopic);
+  };
+
+  const handleGenerateQuestions = async () => {
+    const generatedQuestions = await QuestionGenerator(topic);
+    setQuestions(generatedQuestions);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Quiz App</h1>
+      <TopicInput
+        onTopicChange={handleTopicChange}
+        onGenerateQuestions={handleGenerateQuestions}
+      />
+      <Button />
+      <QuestionGenerator questions={questions} />
+       <QuizQuestions questions={questions} /> 
     </div>
   );
-}
+};
 
 export default App;
